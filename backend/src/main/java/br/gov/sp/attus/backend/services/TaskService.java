@@ -3,6 +3,7 @@ package br.gov.sp.attus.backend.services;
 import br.gov.sp.attus.backend.dtos.TaskRequestDTO;
 import br.gov.sp.attus.backend.dtos.TaskResponseDTO;
 import br.gov.sp.attus.backend.enums.TaskStatus;
+import br.gov.sp.attus.backend.exceptions.InvalidStatusTransitionException;
 import br.gov.sp.attus.backend.exceptions.TaskNotFoundException;
 import br.gov.sp.attus.backend.models.Task;
 import br.gov.sp.attus.backend.repositories.TaskRepository;
@@ -84,6 +85,34 @@ public class TaskService {
         Task updated = repository.save(task);
         log.info("Task updated successfully with id: {}", updated.getId());
 
+        return TaskResponseDTO.from(updated);
+    }
+
+    public TaskResponseDTO updateStatus(Long id, TaskStatus newStatus) {
+        log.info("Updating status of task id: {} to {}", id, newStatus);
+
+        Task task = repository.findById(id).orElseThrow(() -> {
+            log.warn("Task not found for status update with id: {}", id);
+            return new TaskNotFoundException(id);
+        });
+
+        if (!task.getStatus().canTransitionTo(newStatus)) {
+            log.warn(
+                "Invalid status transition from {} to {} for task id: {}",
+                task.getStatus(),
+                newStatus,
+                id
+            );
+            throw new InvalidStatusTransitionException(
+                task.getStatus(),
+                newStatus
+            );
+        }
+
+        task.setStatus(newStatus);
+        Task updated = repository.save(task);
+
+        log.info("Task id: {} status updated to {}", id, newStatus);
         return TaskResponseDTO.from(updated);
     }
 
