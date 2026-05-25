@@ -12,6 +12,7 @@ import { TaskForm } from "./TaskForm";
 import { StatusFilter } from "./StatusFilter";
 import { Button } from "./ui/button";
 import { Plus } from "lucide-react";
+import { ThemeToggle } from "./theme/Toggle";
 
 type OptimisticAction =
   | { type: "status_change"; id: number; status: TaskStatus }
@@ -163,10 +164,13 @@ export function TaskList() {
             Gerencie suas tarefas
           </p>
         </div>
-        <Button onClick={() => setFormOpen(true)}>
-          <Plus className="w-4 h-4 mr-2" />
-          Nova task
-        </Button>
+        <div className="flex items-center gap-2">
+          <ThemeToggle />
+          <Button onClick={() => setFormOpen(true)}>
+            <Plus className="w-4 h-4 mr-2" />
+            Nova task
+          </Button>
+        </div>
       </div>
 
       <StatusFilter selected={status} onChange={handleFilterChange} />
