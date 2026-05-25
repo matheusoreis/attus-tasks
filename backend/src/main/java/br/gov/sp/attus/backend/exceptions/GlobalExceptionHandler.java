@@ -58,4 +58,11 @@ public class GlobalExceptionHandler {
         body.put("message", message);
         return ResponseEntity.status(status).body(body);
     }
+
+    @ExceptionHandler(InvalidStatusTransitionException.class)
+    public ResponseEntity<Map<String, Object>> handleInvalidTransition(
+        InvalidStatusTransitionException ex
+    ) {
+        return buildResponse(HttpStatus.UNPROCESSABLE_CONTENT, ex.getMessage());
+    }
 }
