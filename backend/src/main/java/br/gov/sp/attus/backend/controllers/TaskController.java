@@ -2,6 +2,7 @@ package br.gov.sp.attus.backend.controllers;
 
 import br.gov.sp.attus.backend.dtos.TaskRequestDTO;
 import br.gov.sp.attus.backend.dtos.TaskResponseDTO;
+import br.gov.sp.attus.backend.dtos.TaskStatusDTO;
 import br.gov.sp.attus.backend.enums.TaskStatus;
 import br.gov.sp.attus.backend.services.TaskService;
 import jakarta.validation.Valid;
@@ -58,8 +59,8 @@ public class TaskController {
     @PatchMapping("/{id}/status")
     public ResponseEntity<TaskResponseDTO> updateStatus(
         @PathVariable Long id,
-        @RequestParam TaskStatus status
+        @RequestBody @Valid TaskStatusDTO dto
     ) {
-        return ResponseEntity.ok(service.updateStatus(id, status));
+        return ResponseEntity.ok(service.updateStatus(id, dto.getStatus()));
     }
 }
