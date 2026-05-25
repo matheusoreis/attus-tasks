@@ -54,4 +54,12 @@ public class TaskController {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }
+
+    @PatchMapping("/{id}/status")
+    public ResponseEntity<TaskResponseDTO> updateStatus(
+        @PathVariable Long id,
+        @RequestParam TaskStatus status
+    ) {
+        return ResponseEntity.ok(service.updateStatus(id, status));
+    }
 }
