@@ -78,10 +78,6 @@ public class TaskService {
         task.setTitle(dto.getTitle());
         task.setDescription(dto.getDescription());
 
-        if (dto.getStatus() != null) {
-            task.setStatus(dto.getStatus());
-        }
-
         Task updated = repository.save(task);
         log.info("Task updated successfully with id: {}", updated.getId());
 
