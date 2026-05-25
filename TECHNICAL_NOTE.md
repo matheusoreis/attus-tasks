@@ -48,15 +48,15 @@ Todos os componentes usam injeção por construtor em vez de `@Autowired` no cam
 ## Melhorias Futuras
 
 ### Curto prazo
-- **Migrations** — substituir o `ddl-auto=update` por controle versionado do schema
-- **Paginação** — adicionar `Pageable` no `GET /api/tasks` para listar grandes volumes
+- **Migrations**: substituir o `ddl-auto=update` por controle versionado do schema
+- **Paginação**: adicionar `Pageable` no `GET /api/tasks` para listar grandes volumes
 
 ### Médio prazo
-- **Autenticação e autorização** — JWT com Spring Security, associando tasks a usuários
-- **Banco relacional completo** — migrar para PostgreSQL em ambiente de produção
-- **Docker** — containerizar a aplicação com `Dockerfile` e `docker-compose.yml`
+- **Autenticação e autorização**: JWT com Spring Security, associando tasks a usuários
+- **Banco relacional completo**: migrar para PostgreSQL em ambiente de produção
+- **Docker**: containerizar a aplicação com `Dockerfile` e `docker-compose.yml`
 
 ### Longo prazo
-- **Documentação automática** — Swagger/OpenAPI com SpringDoc
-- **Observabilidade** — métricas com Spring Actuator
-- **CI/CD** — pipeline com GitHub Actions para rodar testes a cada push
+- **Documentação automática**: Swagger/OpenAPI com SpringDoc
+- **Observabilidade**: métricas com Spring Actuator
+- **CI/CD**: pipeline com GitHub Actions para rodar testes a cada push
