@@ -1,4 +1,4 @@
-# 📋 Attus Task Manager
+# Attus Task Manager
 
 Sistema de gerenciamento de tarefas com controle de fluxo de status.
 
@@ -60,7 +60,7 @@ O banco de dados SQLite será criado automaticamente na raiz do projeto como `ta
 
 ---
 
-## 🧪 Rodando os testes
+## Rodando os testes
 
 ```bash
 cd backend
@@ -286,7 +286,7 @@ TODO → IN_PROGRESS → DONE
 
 ---
 
-## 🧪 Cobertura de Testes
+## Cobertura de Testes
 
 | Cenário | Status |
 |---|---|
@@ -307,7 +307,7 @@ TODO → IN_PROGRESS → DONE
 
 ---
 
-## 📄 Documentos
+## Documentos
 
 - [`TECHNICAL_NOTE.md`](./TECHNICAL_NOTE.md) — Decisões técnicas e trade-offs
 - [`INCIDENT_ANALYSIS.md`](./INCIDENT_ANALYSIS.md) — Análise de incidente
