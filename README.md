@@ -8,7 +8,7 @@ Sistema de gerenciamento de tarefas com controle de fluxo de status.
 
 ```
 attus-tasks/
-├── backend/    → SpringBoot
+├── backend/    → Spring Boot
 └── frontend/   → React + Vite
 ```
 
@@ -23,10 +23,14 @@ attus-tasks/
 - SQLite
 - Gradle
 - JUnit 5 + Mockito
+- SpringDoc OpenAPI (Swagger UI)
 
-### Front-end *(em desenvolvimento)*
-- React + Vite
+### Front-end
+- React 19 + Vite
 - TypeScript
+- Tailwind CSS v4
+- shadcn/ui
+- Axios
 
 ---
 
@@ -50,13 +54,44 @@ cd attus-tasks/backend
 
 > Windows: use `gradlew.bat bootRun`
 
-A API estará disponível em: `http://localhost:8080`
+A API estará disponível em: `http://localhost:8080/api`
 
 O banco de dados SQLite será criado automaticamente na raiz do projeto como `taskmanager.db`.
 
-### Front-end *(em desenvolvimento)*
+### Front-end
 
-> Em breve.
+> **Para facilitar a validação, o frontend já está buildado e servido pelo próprio Spring Boot.**
+> Basta subir o backend e acessar: `http://localhost:8080/`
+
+Caso queira rodar em modo de desenvolvimento:
+
+**Pré-requisitos**
+- Node.js 18+
+
+```bash
+# Entre na pasta do front-end
+cd attus-tasks/frontend
+
+# Instale as dependências
+npm install
+
+# Suba o projeto
+npm run dev
+```
+
+O frontend estará disponível em: `http://localhost:5173`
+
+> Certifique-se de que o backend está rodando em `http://localhost:8080`
+
+---
+
+## Documentação da API
+
+Com o backend rodando, acesse o Swagger UI em:
+
+```
+http://localhost:8080/swagger-ui.html
+```
 
 ---
 
@@ -74,17 +109,44 @@ cd backend
 ## Estrutura do Back-end
 
 ```
-src/main/java/br/gov/sp/attus/backend/
-├── configs/ → Configuração do interceptor HTTP
-├── controllers/ → Endpoints
-├── dtos/ → Objetos de entrada e saída da API
-├── enums/ → TaskStatus com regras de transição
-├── exceptions/ → Exceções customizadas e handler global
-├── loggings/ → Interceptor de log por requisição
-├── models/ → Entidade JPA
+src/main/java/ai/attus/backend/
+├── configs/      → Configuração do OpenAPI e interceptor HTTP
+├── controllers/  → Endpoints
+├── dtos/         → Objetos de entrada e saída da API
+├── enums/        → TaskStatus com regras de transição
+├── exceptions/   → Exceções customizadas e handler global
+├── loggings/     → Interceptor de log por requisição
+├── models/       → Entidade JPA
 ├── repositories/ → Acesso ao banco de dados
-└── services/ → Regras de negócio
+└── services/     → Regras de negócio
 ```
+
+## Estrutura do Front-end
+
+```
+src/
+├── components/
+│   ├── ui/             → Componentes base do shadcn/ui
+│   ├── TaskCard.tsx    → Card individual de tarefa com ações
+│   ├── TaskForm.tsx    → Modal de criação e edição
+│   ├── TaskList.tsx    → Lista principal com filtros e estado otimista
+│   └── StatusFilter.tsx → Filtro de status por botões
+├── services/
+│   └── taskService.ts  → Integração com a API via axios
+└── ...
+```
+
+---
+
+## Funcionalidades do Front-end
+
+- Listagem de tarefas com filtro por status
+- Criação e edição via modal
+- Atualização de status com **UI otimista** (feedback imediato sem aguardar API)
+- Exclusão de tarefas
+- Contadores por status em tempo real
+- Tema claro/escuro
+- Validação de formulário no cliente
 
 ---
 
@@ -122,13 +184,13 @@ GET /api/tasks/{id}
 **Response 200:**
 ```json
 {
-    "id": 1,
-    "title": "Minha Task",
-    "description": "Descrição da Task",
-    "status": "TODO",
-    "createdAt": "2026-05-25T17:40:26.015",
-    "updatedAt": "2026-05-25T17:40:26.015"
-  }
+  "id": 1,
+  "title": "Minha Task",
+  "description": "Descrição da Task",
+  "status": "TODO",
+  "createdAt": "2026-05-25T17:40:26.015",
+  "updatedAt": "2026-05-25T17:40:26.015"
+}
 ```
 
 **Response 404:**
@@ -151,7 +213,7 @@ POST /api/tasks
 ```json
 {
   "title": "Minha Task",
-  "description": "Descrição da Task",
+  "description": "Descrição da Task"
 }
 ```
 
@@ -189,7 +251,7 @@ PUT /api/tasks/{id}
 ```json
 {
   "title": "Minha Task",
-  "description": "Descrição da Task",
+  "description": "Descrição da Task"
 }
 ```
 
@@ -234,7 +296,7 @@ PATCH /api/tasks/{id}/status
   "id": 1,
   "title": "Minha Task",
   "description": "Descrição da Task",
-  "status": "TODO",
+  "status": "IN_PROGRESS",
   "createdAt": "2026-05-25T17:40:26.015",
   "updatedAt": "2026-05-25T17:40:26.015"
 }
