@@ -39,7 +39,7 @@ attus-tasks/
 ### Back-end
 
 **Pré-requisitos**
-- Java 17+
+- Java 17
 
 ```bash
 # Clone o repositório
